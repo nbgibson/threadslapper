@@ -5,20 +5,24 @@ services:
     build:
       context: .
     environment:
-      # Discord bot token
-      THREADSLAPPER_TOKEN: ${THREADSLAPPER_TOKEN:?THREADSLAPPER_TOKEN not set.}
-      # Frequency in which the bot should check the RSS feed.
-      THREADSLAPPER_CHECK_INTERVAL_MIN: ${THREADSLAPPER_CHECK_INTERVAL_MIN:-5}
-      # Should the bot perform a latest episode check on startup?
-      THREADSLAPPER_POST_LATEST_EPISODE_CHECK: ${THREADSLAPPER_POST_LATEST_EPISODE_CHECK:-true}
-
-      # The yaml file that specifies multiple RSS feeds
-      THREADSLAPPER_CONFIG_FILE: ${THREADSLAPPER_CONFIG_FILE:-example_config.yml}
-
-      # Alternatively, a single RSS feed + channel ID
-      # THREADSLAPPER_CHANNEL__TITLE: ${THREADSLAPPER_CHANNEL__TITLE:?THREADSLAPPER_CHANNEL__TITLE not set}
-      # THREADSLAPPER_CHANNEL__CHANNEL_ID: ${THREADSLAPPER_CHANNEL__CHANNEL_ID:?THREADSLAPPER_CHANNEL__CHANNEL_ID not set.}
-      # THREADSLAPPER_CHANNEL__RSS_FEED: ${THREADSLAPPER_CHANNEL__RSS_FEED:?THREADSLAPPER_CHANNEL__RSS_FEED not set.}
+      # Enables or disables a given channel.
+      THREADSLAPPER_CHANNEL__ENABLED: 1
+      # TBH cake I don't know what this one does. May be a Forums thing.
+      THREADSLAPPER_CHANNEL__TITLE: Foo # Optional
+      # Text prefix for a created thread. Leave blank for the title to just be an episode's number and title.
+      THREADSLAPPER_CHANNEL__TITLE_PREFIX: Bar # OPTIONAL
+      # Channel ID of the channel the thread will be posted to.
+      THREADSLAPPER_CHANNEL__CHANNEL_ID:
+      # RSS Feed of the podcast being watched
+      THREADSLAPPER_CHANNEL__RSS_FEED:
+      # Bot token taken from the Discord developer website
+      THREADSLAPPER_TOKEN:
+      # Frequency of new update checks. Defaults to 5 minutes
+      THREADSLAPPER_CHECK_INTERVAL_MIN: 5 # OPTIONAL
+      # Enables or disables checking to see if the most recently posted episode has already been posted. Set to false for testing without needing a new entry on the target feed to be created.
+      THREADSLAPPER_POST_LATEST_EPISODE_CHECK: 0
+      # If doing multiple targets, use a config file. See documentation for additional details and an example.
+      THREADSLAPPER_CONFIG_FILE: # OPTIONAL
     volumes:
       - /etc/localtime:/etc/localtime
       - $PWD/config:/opt/threadslapper/config
